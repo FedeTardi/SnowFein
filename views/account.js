@@ -1,14 +1,13 @@
 const express = require('express');
+const app = express();
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
-const router = express.Router();
-
-const app = express();
+const accountRoutes = express.Router();
 const saltRounds = 10;
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -19,15 +18,15 @@ const pool = mysql.createPool({
     database: 'database sito nuovo'
 });
 
-app.get('/', (req, res) => {
+accountRoutes.get('/', (req, res) => {
     res.send('home di account')
 });
 
-app.get('/register', (req, res) => {
+accountRoutes.get('/register', (req, res) => {
     res.render(`account/register`);
 });
 
-app.post('/register', async (req, res) => {
+accountRoutes.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds); //codifica della password
 
@@ -54,4 +53,4 @@ app.post('/register', async (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = accountRoutes;

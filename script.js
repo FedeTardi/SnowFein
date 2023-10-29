@@ -9,7 +9,7 @@ const port = 3000;
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
-// Configura il middleware per il parsing dei dati del modulo body-parser
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,6 +49,10 @@ app.post('/login', async (req, res) => {
     }
 
 
+});
+
+app.get('*', (req, res) => {
+    res.status(404).send('Pagina non trovata');
 });
 
 app.listen(port, () => {

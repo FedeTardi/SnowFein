@@ -4,17 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
     <title>Register</title>
 </head>
 
 <body>
-    <form method="post" action="/register">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <button type="submit">Registrati</button>
+
+    <form class="form" method="post" action="/register">
+        <div class="flex-column">
+            <labe>Email </label>
+        </div>
+        <div class="inputForm">
+            <input type="text" class="input" name="email" id="email" placeholder="Enter your Email" autocomplete="email"
+                required>
+        </div>
+
+        <div class="flex-column">
+            <label>Password </label>
+        </div>
+        <div class="inputForm">
+            <input type="password" class="input" name="password" id="password" placeholder="Enter your Password"
+                required>
+        </div>
+
+        <div class="flex-row">
+            <div>
+                <input type="checkbox">
+                <label>Remember me </label>
+            </div>
+            <span class="span">Forgot password?</span>
+        </div>
+        <button class="button-submit">Sign In</button>
+        <p class="p">Don't have an account? <span class="span">Sign Up</span>
+            </div>
     </form>
+
 </body>
 
 <script>
