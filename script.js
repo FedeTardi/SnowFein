@@ -2,11 +2,19 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
 const saltRounds = 10;
+
+const connection = mysql.createConnection({
+    host: 'hostname',
+    user: 'root',
+    password: '',
+    database: 'database sito nuovo'
+});
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
@@ -74,9 +82,9 @@ app.post('/login', async (req, res) => {
     if (usersData.some(item => item.username === username)) {
         const user = usersData.find(item => item.username === username);
         bcrypt.compare(password, user.password, (error, result) => {
-            if(error) {
+            if (error) {
                 console.log(error);
-            } else if(result) {
+            } else if (result) {
                 res.send('login riuscito');
             } else {
                 res.send('password errata');
