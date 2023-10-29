@@ -2,19 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
-const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
-const saltRounds = 10;
-
-const connection = mysql.createConnection({
-    host: 'hostname',
-    user: 'root',
-    password: '',
-    database: 'database sito nuovo'
-});
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
@@ -22,45 +13,8 @@ app.set('views', path.join(__dirname, "views"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Dati utente di esempio (generalmente dovresti salvarli in un database)
-const users = [];
-
-// Pagina di registrazione
-app.get('/register', (req, res) => {
-    res.render(`register`);
-});
-
-// Registrazione dell'utente
-app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-
-    let usersData = [];
-
-    try {
-        const rawData = fs.readFileSync('data.json');
-        usersData = JSON.parse(rawData);
-        // Esegui altre operazioni con jsonData
-    } catch (error) {
-        console.error('Errore durante l\'analisi del file JSON:', error);
-    }
-
-    if (usersData.some(item => item.username === username)) {
-
-        res.render('login');
-
-    } else {
-
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        usersData.push({ username, password: hashedPassword });
-        fs.writeFileSync('data.json', JSON.stringify(usersData, null, 2));
-
-        res.send('Registrazione completata');
-    }
-});
-
-const productsRouter = require('./routes/products')
-app.use('/products', productsRouter)
+const accountRoutes = require('./views/account.js');
+app.use('/account', accountRoutes);
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -93,9 +47,13 @@ app.post('/login', async (req, res) => {
     } else {
         res.send('username non trovato')
     }
+
+
 });
 
-
+app.get('*', (req, res) => {
+    res.status(404).send('Pagina non trovata');
+});
 
 app.listen(port, () => {
     console.log(`Server in ascolto su http://localhost:${port}`);
