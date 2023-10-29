@@ -17,7 +17,7 @@ const accountRoutes = require('./views/account.js');
 app.use('/account', accountRoutes);
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('account/login');
 });
 // Verifica il login
 app.post('/login', async (req, res) => {
@@ -49,10 +49,6 @@ app.post('/login', async (req, res) => {
     }
 
 
-});
-
-app.get('*', (req, res) => {
-    res.status(404).send('Pagina non trovata');
 });
 
 app.listen(port, () => {

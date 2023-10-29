@@ -19,8 +19,12 @@ const pool = mysql.createPool({
     database: 'database sito nuovo'
 });
 
+app.get('/', (req, res) => {
+    res.send('home di account')
+});
+
 app.get('/register', (req, res) => {
-    res.render(`register`);
+    res.render(`account/register`);
 });
 
 app.post('/register', async (req, res) => {
