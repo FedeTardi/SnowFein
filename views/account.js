@@ -7,9 +7,9 @@ const accountRoutes = express.Router();
 const saltRounds = 10;
 
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+accountRoutes.use(express.static('public'));
+accountRoutes.use(bodyParser.urlencoded({ extended: false }));
+accountRoutes.use(bodyParser.json());
 
 const pool = mysql.createPool({
     host: 'localhost',
@@ -27,7 +27,7 @@ accountRoutes.get('/register', (req, res) => {
 });
 
 accountRoutes.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds); //codifica della password
 
     pool.getConnection((err, connection) => {
@@ -37,7 +37,7 @@ accountRoutes.post('/register', async (req, res) => {
         }
 
         const dataToInsert = {
-            email: username,
+            email: email,
             password: hashedPassword
         };
     

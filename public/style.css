@@ -1,20 +1,30 @@
-body{
-    background-color: #252727;
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins-Medium.ttf');
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FCFBF4;
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 .form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #ffffff;
+    background-color: #FCFBF4;
     padding: 30px;
     width: 450px;
     border-radius: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-::placeholder {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0 auto;
+    border: solid 2px #283618;
 }
 
 .form button {
@@ -23,11 +33,12 @@ body{
 
 .flex-column>label {
     color: #151717;
+    font-size: larger;
     font-weight: 600;
 }
 
 .inputForm {
-    border: 1.5px solid #ecedec;
+    border: 1.5px solid #283618;
     border-radius: 10px;
     height: 50px;
     display: flex;
@@ -49,7 +60,7 @@ body{
 }
 
 .inputForm:focus-within {
-    border: 1.5px solid #2d79f3;
+    border: 1.5px solid #606c38;
 }
 
 .flex-row {
@@ -69,14 +80,14 @@ body{
 .span {
     font-size: 14px;
     margin-left: 5px;
-    color: #2d79f3;
+    color: #606c38;
     font-weight: 500;
     cursor: pointer;
 }
 
 .button-submit {
     margin: 20px 0 10px 0;
-    background-color: #151717;
+    background-color: #606c38;
     border: none;
     color: white;
     font-size: 15px;
@@ -88,7 +99,7 @@ body{
 }
 
 .button-submit:hover {
-    background-color: #252727;
+    background-color: #283618;
 }
 
 .p {
@@ -115,6 +126,6 @@ body{
 }
 
 .btn:hover {
-    border: 1px solid #2d79f3;
+    border: 1px solid #606c38;
     ;
 }
