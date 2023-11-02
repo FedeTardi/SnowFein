@@ -1,7 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const path = require('path');
-const fs = require('fs');
+
+const session = require('express-session');
+const passport = require('passport');
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -13,43 +15,17 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(session({
+    secret: 'lWza8IO3KGB2DElgDewkP528wm6ggFBd',
+    resave: false,
+    saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const accountRoutes = require('./views/account.js');
 app.use('/account', accountRoutes);
-
-app.get('/login', (req, res) => {
-    res.render('account/login');
-});
-// Verifica il login
-app.post('/login', async (req, res) => {
-
-    let usersData = [];
-
-    try {
-        const rawData = fs.readFileSync('data.json');
-        usersData = JSON.parse(rawData);
-        // Esegui altre operazioni con jsonData
-    } catch (error) {
-        console.error('Errore durante l\'analisi del file JSON:', error);
-    }
-
-    const { username, password } = req.body;
-    if (usersData.some(item => item.username === username)) {
-        const user = usersData.find(item => item.username === username);
-        bcrypt.compare(password, user.password, (error, result) => {
-            if (error) {
-                console.log(error);
-            } else if (result) {
-                res.send('login riuscito');
-            } else {
-                res.send('password errata');
-            }
-        });
-    } else {
-        res.send('username non trovato')
-    }
-
-
-});
 
 app.get('*', (req, res) => {
     res.status(404).send('Pagina non trovata');

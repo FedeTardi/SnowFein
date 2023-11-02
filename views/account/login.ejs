@@ -7,38 +7,42 @@
     <link href="style.css" rel="stylesheet">
     <title>Log-in</title>
 </head>
-
+<%-include("../partials/navbar.ejs")%>
 <body>
-    <form class="form" method="post" action="/login">
-        <div class="flex-column">
-            <labe>Email </label>
-        </div>
-        <div class="inputForm">
-            <input type="text" class="input" name="email" id="email" placeholder="Enter your Email"
-                autocomplete="email" required>
-        </div>
-
-        <div class="flex-column">
-            <label>Password </label>
-        </div>
-        <div class="inputForm">
-            <input type="password" class="input" name="password" id="password" placeholder="Enter your Password"
-                required>
-        </div>
-
-        <div class="flex-row">
-            <div>
-                <input type="checkbox">
-                <label>Remember me </label>
+    <container class="centered">
+        <form class="form" method="post" action="/account/login">
+            <div class="flex-column">
+                <label>Email </label>
             </div>
-            <span class="span">Forgot password?</span>
-        </div>
-        <button class="button-submit">Sign In</button>
-        <p class="p">Don't have an account? <span class="span">Sign Up</span>
+            <div class="inputForm">
+                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
+                <input type="text" class="input" name="email" id="email" placeholder="Enter your Email"
+                    autocomplete="off" required>
             </div>
-    </form>
+
+            <div class="flex-column">
+                <label>Password </label>
+            </div>
+            <div class="inputForm">
+                <img width="20" height="20"
+                    src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/24/external-password-networking-tanah-basah-basic-outline-tanah-basah.png" />
+                <input type="password" class="input" name="password" id="password" placeholder="Enter your Password"
+                    required>
+            </div>
+            <div class="flex-row">
+                <div>
+                    <input type="checkbox">
+                    <label>Remember me </label>
+                </div>
+                <span class="span">Forgot password?</span>
+            </div>
+            <button class="button-submit">Sign In</button>
+            <p class="p">Don't have an account? <span class="span" href="/register">Sign Up</span>
+                </div>
+        </form>
+    </container>
 </body>
-
+<%-include("../partials/footer.ejs")%>
 <script>
     window.addEventListener('load', function () {
         document.getElementById('email').value = '';

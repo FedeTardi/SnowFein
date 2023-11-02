@@ -12,12 +12,31 @@
     <container class="centered">
         <form class="form" method="post" action="/account/register">
             <div class="flex-column">
+                <label>Name</label>
+            </div>
+            <div class="inputForm">
+                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
+                <input type="text" class="input" name="name" id="name" placeholder="Enter your Name"
+                    autocomplete="off" required>
+            </div>
+
+            <div class="flex-column">
+                <label>Surname</label>
+            </div>
+            <div class="inputForm">
+                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
+                <input type="text" class="input" name="surname" id="surname" placeholder="Enter your Surname"
+                    autocomplete="off" required>
+            </div>
+
+
+            <div class="flex-column">
                 <label>Email</label>
             </div>
             <div class="inputForm">
-                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png"/>
+                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
                 <input type="text" class="input" name="email" id="email" placeholder="Enter your Email"
-                    autocomplete="email" required>
+                    autocomplete="off" required>
             </div>
 
             <div class="flex-column">
@@ -25,21 +44,16 @@
             </div>
 
             <div class="inputForm">
-                <img width="20" height="20" src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/24/external-password-networking-tanah-basah-basic-outline-tanah-basah.png"/>
+                <img width="20" height="20"
+                    src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/24/external-password-networking-tanah-basah-basic-outline-tanah-basah.png" />
                 <input type="password" class="input" name="password" id="password" placeholder="Enter your Password"
-                    required> 
-                <img width="20" height="20" src="https://icons8.com/icon/KJa1vG6vZTIQ/eye"/>
+                    required>
+                <img width="20" height="20" src="https://icons8.com/icon/KJa1vG6vZTIQ/eye" />
             </div>
 
-            <div class="flex-row">
-                <div>
-                    <input type="checkbox">
-                    <label>Remember me </label>
-                </div>
-                <span class="span">Forgot password?</span>
-            </div>
-            <button class="button-submit">Sign In</button>
-            <p class="p">Don't have an account? <span class="span">Sign Up</span>
+            <div class="flex-row"></div>
+            <button class="button-submit">Sign Up</button>
+            <p class="p">Already have an account? <span class="span">Sign In</span>
                 </div>
         </form>
     </container>

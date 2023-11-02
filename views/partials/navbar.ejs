@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+    
+    <div class="wrapper">
+        <header>
+            <nav>
+                <div class="menu-icon">
+                    <i class="fa fa-bars fa-2x"></i>
+                </div>
+                <div class="logo">
+                    LOGO
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li>
+                            <div id="account-icon" class="account-logo dropdown"><img width="40" height="40"
+                                    src="https://img.icons8.com/ios-filled/50/283618/user-male-circle.png" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+</body>
+
+</html>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.body.style.backgroundColor = "white";
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const accountIcon = document.getElementById('account-icon');
+
+        accountIcon.addEventListener('click', function () {
+            openNav();
+        });
+    });
+</script>
+
+<style>
+    /* The side navigation menu */
+    .sidenav {
+        height: 100%;
+        /* 100% Full-height */
+        width: 0;
+        /* 0 width - change this with JavaScript */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Stay on top */
+        top: 0;
+        /* Stay at the top */
+        right: 0;
+        background-color: #111;
+        /* Black*/
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 60px;
+        /* Place content 60px from the top */
+        transition: 0.5s;
+        /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 20px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+</style>
