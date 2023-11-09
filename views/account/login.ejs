@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
     <title>Log-in</title>
 </head>
 <%-include("../partials/navbar.ejs")%>
@@ -16,7 +16,7 @@
             </div>
             <div class="inputForm">
                 <img width="20" height="20" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
-                <input type="text" class="input" name="email" id="email" placeholder="Enter your Email"
+                <input type="email" class="input" name="email" id="email" placeholder="Enter your Email"
                     autocomplete="off" required>
             </div>
 
@@ -37,7 +37,7 @@
                 <span class="span">Forgot password?</span>
             </div>
             <button class="button-submit">Sign In</button>
-            <p class="p">Don't have an account? <span class="span" href="/register">Sign Up</span>
+            <p class="p">Don't have an account? <a class="span" href="/account/register">Sign Up</a>
                 </div>
         </form>
     </container>

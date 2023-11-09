@@ -112,7 +112,7 @@ accountRoutes.post('/register', async (req, res) => {
         const dataToInsert = {
             name: name,
             surname: surname,
-            email: email,
+            email: email.toLowerCase(),
             password: hashedPassword,
         };
 

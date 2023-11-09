@@ -19,12 +19,12 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #FCFBF4;
+    background-color: transparent;
     padding: 30px;
     width: 450px;
     border-radius: 20px;
     margin: 0 auto;
-    border: solid 0.13vw #283618;
+    border: solid 0.13vw #466c38;
 }
 
 .form button {
@@ -38,7 +38,7 @@ body {
 }
 
 .inputForm {
-    border: 1.5px solid #283618;
+    border: 1.5px solid #466c38;
     border-radius: 10px;
     height: 50px;
     display: flex;
@@ -61,7 +61,7 @@ body {
 }
 
 .inputForm:focus-within {
-    border: 1.5px solid #606c38;
+    border: 1.5px solid #5c8e49;
 }
 
 .flex-row {
@@ -81,14 +81,20 @@ body {
 .span {
     font-size: 14px;
     margin-left: 5px;
-    color: #606c38;
-    font-weight: 500;
+    color: #466c38;
+    font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
 }
+.span:hover{
+    color:#5c8e49;
+    text-decoration: none;
+}
+
 
 .button-submit {
     margin: 20px 0 10px 0;
-    background-color: #606c38;
+    background-color: #466c38;
     border: none;
     color: white;
     font-size: 15px;
@@ -100,7 +106,7 @@ body {
 }
 
 .button-submit:hover {
-    background-color: #283618;
+    background-color: #5c8e49;
 }
 
 .p {
@@ -127,8 +133,7 @@ body {
 }
 
 .btn:hover {
-    border: 1px solid #606c38;
-    ;
+    border: 1px solid #466c38;
 }
 
 header {
@@ -148,7 +153,7 @@ header {
     position: fixed;
     float: left;
     margin: 16px 46px;
-    color: #283618;
+    color: #2D4739;
     font-weight: bold;
     font-size: 1.5vw;
     letter-spacing: 2px;
@@ -165,7 +170,7 @@ nav ul {
     list-style: none;
     background: rgba(0, 0, 0, 0);
     overflow: hidden;
-    color: #283618;
+    color: #2D4739;
     padding: 0;
     text-align: right;
     margin: 0;
@@ -178,14 +183,14 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #283618;
+    color: #2D4739;
     font-size: 1vw;
     font-weight: 500;
     transition: transform 0.2s;
 }
 
 nav ul li a:hover {
-    color: #283618;
+    color: #2D4739;
     transform: scale(1.2);
     text-decoration: none;
 }
@@ -206,6 +211,6 @@ nav ul li a:hover {
     box-sizing: border-box;
     padding: 15px 24px;
     cursor: pointer;
-    color: #283618;
+    color: #2D4739;
     display: none;
 }
