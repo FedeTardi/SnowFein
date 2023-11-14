@@ -6,6 +6,8 @@ const passport = require('passport');
 
 const bodyParser = require('body-parser');
 
+const favicon = require('serve-favicon');
+
 const app = express();
 const port = 3000;
 
@@ -14,6 +16,7 @@ app.set('views', path.join(__dirname, "views"))
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(session({
     secret: 'lWza8IO3KGB2DElgDewkP528wm6ggFBd',

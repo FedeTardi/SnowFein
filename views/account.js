@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+
+const nodeMailer = require('nodemailer');
+const transporter = require('./account/nodeMailer/nodeMailerConfig');
+
 const accountRoutes = express.Router();
 
 const bcrypt = require('bcrypt');
@@ -101,6 +105,19 @@ accountRoutes.get('/register', (req, res) => {
 accountRoutes.post('/register', async (req, res) => {
     const { name, surname, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 6; i++) { // Genera un codice di lunghezza 6
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    const mailOptions = {
+        from: 'RaptHill@gmail.com',
+        to: email,
+        subject: 'Conferma Registrazione',
+        text: `Il tuo codice di conferma è: ${code}`
+    };
 
     pool.getConnection((err, connection) => {
         if (err) {
