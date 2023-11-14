@@ -9,7 +9,6 @@ const saltRounds = 10;
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('./passport/user.js');
 
 app.set('view engine', 'ejs');
 accountRoutes.use(express.static('public'));
@@ -128,15 +127,11 @@ accountRoutes.post('/register', async (req, res) => {
     });
 });
 
-
-
-
-
 accountRoutes.get('/login', (req, res) => {
     res.render('account/login');
 });
 
-app.post('/login', passport.authenticate('local', {
+accountRoutes.post('/login', passport.authenticate('local', {
     successRedirect: '/account/dashboard',
     failureRedirect: '/login',
     failureFlash: true
@@ -145,7 +140,7 @@ app.post('/login', passport.authenticate('local', {
 });
 
 accountRoutes.get('/dashboard', (req, res) => {
-    res.send('login riuscito');
+    res.render('account/dashboard');
 });
 
 module.exports = accountRoutes;

@@ -13,6 +13,7 @@
     "node": "^21.0.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sequelize": "^6.35.0"
   }
 }
