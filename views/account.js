@@ -101,8 +101,11 @@ accountRoutes.get('/register', (req, res) => {
 });
 
 accountRoutes.post('/register', async (req, res) => {
-    const { name, surname, email, password } = req.body;
+    var { name, surname, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase;
+    email = email.toLowerCase();
 
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let code = '';
@@ -110,19 +113,24 @@ accountRoutes.post('/register', async (req, res) => {
         code += characters.charAt(Math.floor(Math.random() * characters.length));
     }
 
-    const mailOptions = {
-        from: 'RaptHill@gmail.com',
-        to: email,
-        subject: 'Conferma Registrazione',
-        text: `Il tuo codice di conferma è: ${code}`
-    };
-
     const info = await transporter.sendMail({
         from: '"RaptHill 🦖" <RaptHill@gmail.com>',
         to: email,
-        subject: "Ciao " + name,
-        text: "Hello world?",
-        html: "<b>Hello world?</b>",
+        subject: "Validazione account RaptHill ",
+        text: "",
+        html: `
+        <p>Gentile ${name},</p>
+    
+        <p>Grazie per esserti registrato su RaptHill!</p>
+
+        <p>Il codice di verifica per attivare il tuo account è: <strong>${code}</strong></p>
+
+        <p>Se non hai effettuato questa richiesta di registrazione, ti preghiamo di ignorare questa email.</p>
+
+        <p>Grazie per aver scelto RaptHill.</p>
+
+        <p>Cordiali saluti,<br>Il Team RaptHill</p>
+        `,
     });
 
     pool.getConnection((err, connection) => {
@@ -134,7 +142,7 @@ accountRoutes.post('/register', async (req, res) => {
         const dataToInsert = {
             name: name,
             surname: surname,
-            email: email.toLowerCase(),
+            email: email,
             password: hashedPassword,
         };
 
