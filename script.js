@@ -16,6 +16,7 @@ app.set('views', path.join(__dirname, "views"))
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(session({
@@ -29,6 +30,14 @@ app.use(passport.session());
 
 const accountRoutes = require('./views/account.js');
 app.use('/account', accountRoutes);
+
+app.get('/home', (req, res) => {
+    res.render('pages/home')
+});
+
+app.get('/', (req, res) => {
+    res.redirect('/home');
+});
 
 app.listen(port, () => {
     console.log(`Server in ascolto sulla porta ${port}`);
