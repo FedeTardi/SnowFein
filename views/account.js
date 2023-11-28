@@ -165,7 +165,7 @@ accountRoutes.post('/register', async (req, res) => {
             if (err) {
                 console.error('Errore durante l\'inserimento dei dati:', err);
             } else {
-                res.send("dati salvati nel database");
+                res.redirect('/account/verification');
             }
         });
 
@@ -189,33 +189,8 @@ accountRoutes.get('/dashboard', (req, res) => {
     res.render('account/dashboard');
 });
 
-/*
-
-accountRoutes.get('/sendemail', (req, res) => {
-    res.render('pages/email')
+accountRoutes.get('/verification', (req, res) => {
+    res.render('account/verification');
 });
-
-accountRoutes.post('/sendemail', async (req, res) => {
-    const { email, number } = req.body;
-
-    for (let i = 0; i < number; i++) {
-        const info = await transporter.sendMail({
-            from: '"SaraMart" <RaptHill@gmail.com>',
-            to: email,
-            subject: "Ricevuta d'acquisto" + i,
-            html: `
-            <p>Ci fa piacere sapere che hai voluto acquistare dal nostro sito, speriamo che resterai soddisfatto e ritornerai in futuro.</p>
-            <img src="https://64.media.tumblr.com/262c122c52dc590e1ceb5f295c04f2c0/712cfe535ca51385-ec/s500x750/60d622597e6d7c4cbe4667675b57d6963fa268f1.jpg">
-            <img src="https://i.pinimg.com/236x/31/4e/07/314e07e10bc5d39e2fb44d61e04543e8.jpg">
-            <img src="https://preview.redd.it/some-creepy-cursed-images-idk-if-you-will-like-them-v0-l25jmxvihzv91.jpg?width=640&crop=smart&auto=webp&s=de33b93b3676789e79fc06e0b33092563e367717">
-            <img src="https://preview.redd.it/some-creepy-cursed-images-idk-if-you-will-like-them-v0-5uynt0xhhzv91.jpg?width=640&crop=smart&auto=webp&s=b459412108bd8c309546639e868575f5880d88de">
-        `,
-        });
-    }
-
-    res.redirect('sendemail');
-});
-
-*/
 
 module.exports = accountRoutes;
