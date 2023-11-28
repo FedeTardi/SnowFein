@@ -104,11 +104,12 @@ accountRoutes.post('/register', async (req, res) => {
     var { name, surname, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase;
+    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    surname = surname.charAt(0).toUpperCase() + surname.slice(1).toLowerCase();
     email = email.toLowerCase();
 
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let code = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     for (let i = 0; i < 6; i++) { // Genera un codice di lunghezza 6
         code += characters.charAt(Math.floor(Math.random() * characters.length));
     }
@@ -119,17 +120,30 @@ accountRoutes.post('/register', async (req, res) => {
         subject: "Validazione account RaptHill ",
         text: "",
         html: `
-        <p>Gentile ${name},</p>
-    
-        <p>Grazie per esserti registrato su RaptHill!</p>
-
-        <p>Il codice di verifica per attivare il tuo account è: <strong>${code}</strong></p>
-
-        <p>Se non hai effettuato questa richiesta di registrazione, ti preghiamo di ignorare questa email.</p>
-
-        <p>Grazie per aver scelto RaptHill.</p>
-
-        <p>Cordiali saluti,<br>Il Team RaptHill</p>
+        <html>
+        <head>
+            <style>
+                .container {
+                    width: 80%;
+                    margin: 0 auto;
+                    padding: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                /* ... altri stili ... */
+            </style>
+        </head>
+        <body>
+            <div class="container" style="color: red">
+                <p>Gentile ${name},</p>
+                <p>Grazie per esserti registrato su RaptHill!</p>
+                <p>Il codice di verifica per attivare il tuo account è: <strong>${code}</strong></p>
+                <p>Se non hai effettuato questa richiesta di registrazione, ti preghiamo di ignorare questa email.</p>
+                <p>Grazie per aver scelto RaptHill.</p>
+                <p>Cordiali saluti,<br>Il Team RaptHill</p>
+            </div>
+        </body>
+        </html>
         `,
     });
 
@@ -144,9 +158,10 @@ accountRoutes.post('/register', async (req, res) => {
             surname: surname,
             email: email,
             password: hashedPassword,
+            verificationCode: code,
         };
 
-        connection.query('INSERT INTO accounts SET ?', dataToInsert, (err, results) => {
+        connection.query('INSERT INTO accounttoverificate SET ?', dataToInsert, (err, results) => {
             if (err) {
                 console.error('Errore durante l\'inserimento dei dati:', err);
             } else {
