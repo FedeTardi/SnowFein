@@ -123,29 +123,35 @@ accountRoutes.post('/register', async (req, res) => {
         <html>
         <head>
             <style>
+                body{
+                   display: flex; 
+                   align-items: center; 
+                }
                 .container {
+                    font-size: 15px;
                     width: 80%;
                     margin: 0 auto;
                     padding: 20px;
                     border-radius: 5px;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    color: black;
                 }
                 /* ... altri stili ... */
             </style>
         </head>
         <body>
-            <div class="container" style="color: red">
+            <div class="container" style="color: black">
                 <p>Gentile ${name},</p>
                 <p>Grazie per esserti registrato su RaptHill!</p>
                 <p>Il codice di verifica per attivare il tuo account è: <strong>${code}</strong></p>
                 <p>Se non hai effettuato questa richiesta di registrazione, ti preghiamo di ignorare questa email.</p>
-                <p>Grazie per aver scelto RaptHill.</p>
                 <p>Cordiali saluti,<br>Il Team RaptHill</p>
             </div>
         </body>
         </html>
         `,
     });
+    /*
 
     pool.getConnection((err, connection) => {
         if (err) {
@@ -161,16 +167,20 @@ accountRoutes.post('/register', async (req, res) => {
             verificationCode: code,
         };
 
-        connection.query('INSERT INTO accounttoverificate SET ?', dataToInsert, (err, results) => {
+
+
+        connection.query('INSERT INTO accountstoverificate SET ?', dataToInsert, (err, results) => {
             if (err) {
                 console.error('Errore durante l\'inserimento dei dati:', err);
             } else {
                 res.redirect('/account/verification');
+                console.log(code)
             }
         });
 
         connection.release();
     });
+    */
 });
 
 accountRoutes.get('/login', (req, res) => {
