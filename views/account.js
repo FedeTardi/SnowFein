@@ -107,6 +107,7 @@ accountRoutes.post('/register', async (req, res) => {
     name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     surname = surname.charAt(0).toUpperCase() + surname.slice(1).toLowerCase();
     email = email.toLowerCase();
+    req.session.email = email;
 
     let code = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -151,7 +152,6 @@ accountRoutes.post('/register', async (req, res) => {
         </html>
         `,
     });
-    /*
 
     pool.getConnection((err, connection) => {
         if (err) {
@@ -173,14 +173,13 @@ accountRoutes.post('/register', async (req, res) => {
             if (err) {
                 console.error('Errore durante l\'inserimento dei dati:', err);
             } else {
-                res.redirect('/account/verification');
-                console.log(code)
+                req.session.needToVerify = true;
+                res.redirect('/account/verify');
             }
         });
 
         connection.release();
     });
-    */
 });
 
 accountRoutes.get('/login', (req, res) => {
@@ -189,18 +188,65 @@ accountRoutes.get('/login', (req, res) => {
 
 accountRoutes.post('/login', passport.authenticate('local', {
     successRedirect: '/account/dashboard',
-    failureRedirect: '/login',
-    failureFlash: true
+    failureRedirect: '/account/login'
 }), function (req, res) {
     req.session.isAuthenticated = true;
 });
 
 accountRoutes.get('/dashboard', (req, res) => {
-    res.render('account/dashboard');
+    if (req.session.isAuthenticated) {
+        res.render('account/dashboard');
+    } else {
+        res.redirect('/account/login')
+    }
+
 });
 
-accountRoutes.get('/verification', (req, res) => {
-    res.render('account/verification');
+accountRoutes.get('/verify', (req, res) => {
+    if (req.session.needToVerify) {
+        res.render('account/verification', { emailToVerify: req.session.email })
+    } else {
+        res.redirect('/account/login')
+    }
+});
+
+accountRoutes.post('/verify', (req, res) => {
+    let verificationCode;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            return done(err);
+        }
+
+        connection.query('SELECT verificationCode FROM accountstoverificate WHERE email = ?', [req.session.email], (err, results) => {
+            connection.release();
+            if (err) {
+                return done(err);
+            }
+            if (results.length === 0) {
+                return done(null, false, { message: 'Utente non trovato' });
+            }
+            const user = results[0];
+            verificationCode = user.verificationCode;
+            return done(null, user);
+        });
+        connection.release();
+    });
+
+    for (let i = 1; i <= 6; i++) {
+        const inputName = 'input' + i;
+        const inputValue = req.body[inputName];
+
+        if (typeof inputValue === 'string') {
+            verificationCode.push(inputValue);
+        } else {
+            return res.status(400).send('Valori di input mancanti o non validi.');
+        }
+    }
+    const userCode = verificationCode.join('');
+
+    if (userCode == verificationCode) {
+        
+    }
 });
 
 module.exports = accountRoutes;
