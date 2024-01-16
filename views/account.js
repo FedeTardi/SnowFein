@@ -167,8 +167,6 @@ accountRoutes.post('/register', async (req, res) => {
             verificationCode: code,
         };
 
-
-
         connection.query('INSERT INTO accountstoverificate SET ?', dataToInsert, (err, results) => {
             if (err) {
                 console.error('Errore durante l\'inserimento dei dati:', err);

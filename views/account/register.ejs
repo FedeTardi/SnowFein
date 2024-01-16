@@ -11,43 +11,38 @@
 <body>
     <container class="centered">
         <form class="form" method="post" action="/account/register">
-            <div class="flex-column">
+            <div class="title">Registration</div>
+            <div class="message">
                 <label>Name</label>
             </div>
-            <div class="inputForm">
-                <img width="25" height="25" src="https://img.icons8.com/badges/48/business-contact.png"
-                    alt="business-contact" />
-                <input type="text" class="input" name="name" id="name" placeholder="Enter your Name" autocomplete="off"
+            <div class="inputs">
+                <input type="text" class="input" name="name" id="name" placeholder="Enter your name" autocomplete="off"
                     required>
             </div>
 
-            <div class="flex-column">
+            <div class="message">
                 <label>Surname</label>
             </div>
-            <div class="inputForm">
-                <img width="23" height="23" src="https://img.icons8.com/badges/48/conference.png" alt="conference" />
-                <input type="text" class="input" name="surname" id="surname" placeholder="Enter your Surname"
+            <div class="inputs">
+                <input type="text" class="input" name="surname" id="surname" placeholder="Enter your surname"
                     autocomplete="off" required>
             </div>
 
 
-            <div class="flex-column">
+            <div class="message">
                 <label>Email</label>
             </div>
-            <div class="inputForm">
-                <img width="22" height="22" src="https://img.icons8.com/fluency-systems-filled/48/000000/email.png" />
-                <input type="email" class="input" name="email" id="email" placeholder="Enter your Email"
+            <div class="inputs">
+                <input type="email" class="input" name="email" id="email" placeholder="Enter your email"
                     autocomplete="off" required>
             </div>
 
-            <div class="flex-column">
+            <div class="message">
                 <label>Password</label>
             </div>
 
-            <div class="inputForm">
-                <img width="22" height="22"
-                    src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/24/external-password-networking-tanah-basah-basic-outline-tanah-basah.png" />
-                <input type="password" class="input" name="password" id="password" placeholder="Enter your Password"
+            <div class="inputs">
+                <input type="password" class="input" name="password" id="password" placeholder="Enter your password"
                     required>
             </div>
 
@@ -65,5 +60,29 @@
         document.getElementById('password').value = '';
     });
 </script>
+
+<style>
+    .form {
+        height: 450px;
+        width: 400px;
+    }
+
+    .inputs input{
+        width: 280px;
+        height: 32px;
+        text-align: left;
+        font-weight: 500;
+        margin-top: -10px;
+    }
+
+    .message{
+        margin-top: 10px;
+        align-self: left;
+    }
+
+    .button-submit{
+        margin-top: 25px;
+    }
+</style>
 
 </html>

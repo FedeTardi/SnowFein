@@ -8,7 +8,7 @@
     <title>Verifica</title>
 </head>
 
-<body onload="focusOnInput1">
+<body onload="checkAllInputs(), focusOnInput1()">
     <form class="form" method="post" action="/account/verify">
         <div class="title">Verification Code</div>
         <p class="message">We have sent a verification code to <%= emailToVerify %>
@@ -27,7 +27,7 @@
             <input id="input6" type="text" maxlength="1" oninput="handleInput(this, 'input6')"
                 onkeydown="moveToPrevInput(event, this, 'input5')" onkeypress="validateInput(event)">
         </div>
-        <button class="action" id="verifyButton">Verify</button>
+        <button class="button-submit" id="verifyButton">Verify</button>
     </form>
 </body>
 
@@ -78,9 +78,9 @@
 
         if (isAnyInputEmpty) {
             verifyButton.classList.add('disabled');
-            console.log("almeno un input vuoto")
+            verifyButton.disabled = true;
         } else {
-            console.log("input pieni")
+            verifyButton.disabled = true;
             verifyButton.classList.remove('disabled');
             verifyButton
         }
@@ -128,45 +128,16 @@
     }
 
     .form {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: space-around;
         height: 400px;
         width: 370px;
-        background-color: white;
-        border-radius: 16px;
-        border-color: transparent;
-        padding: 20px;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    }
-
-    .title {
-        font-size: 30px;
-        font-weight: bold;
-        color: black
-    }
-
-    .message {
-        color: #a3a3a3;
-        font-size: 14px;
-        text-align: center
-    }
-
-    .inputs {
-        margin-top: 10px;
-
     }
 
     .inputs input {
+        font-weight: bold;
         width: 32px;
         height: 32px;
         text-align: center;
-        border: none;
-        border-bottom: 1.5px solid #d2d2d2;
         font-size: 20px;
-        font-weight: bold;
-        margin: 0 5px;
     }
 
     .inputs input:focus {
@@ -174,27 +145,9 @@
         outline: none;
     }
 
-    .action {
-        font-family: 'Poppins', sans-serif;
-        margin-top: 24px;
-        padding: 8px 16px;
-        border-radius: 8px;
-        width: 60%;
-        font-size: larger;
-        border: none;
-        background-color: #006fbd;
-        color: white;
-        cursor: pointer;
-    }
-
     .disabled {
         opacity: 0.5;
         cursor: not-allowed;
-    }
-
-    .action:hover {
-        background-color: #005d9e;
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
     }
 </style>
 
