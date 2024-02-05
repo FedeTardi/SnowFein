@@ -89,8 +89,6 @@ passport.deserializeUser((email, done) => {
 });
 
 
-
-
 accountRoutes.get('/', (req, res) => {
     res.send('home di account')
 });
