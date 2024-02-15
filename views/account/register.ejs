@@ -16,7 +16,7 @@
                 <label>Name</label>
             </div>
             <div class="inputs">
-                <input type="text" class="input" name="name" id="name" placeholder="Enter your name" autocomplete="off"
+                <input type="text" class="input" name="name" id="name" autocomplete="off"
                     required>
             </div>
 
@@ -24,7 +24,7 @@
                 <label>Surname</label>
             </div>
             <div class="inputs">
-                <input type="text" class="input" name="surname" id="surname" placeholder="Enter your surname"
+                <input type="text" class="input" name="surname" id="surname"
                     autocomplete="off" required>
             </div>
 
@@ -33,7 +33,7 @@
                 <label>Email</label>
             </div>
             <div class="inputs">
-                <input type="email" class="input" name="email" id="email" placeholder="Enter your email"
+                <input type="email" class="input" name="email" id="email"
                     autocomplete="off" required>
             </div>
 
@@ -42,12 +42,12 @@
             </div>
 
             <div class="inputs">
-                <input type="password" class="input" name="password" id="password" placeholder="Enter your password"
+                <input type="password" class="input" name="password" id="password"
                     required>
             </div>
 
             <div class="flex-row"></div>
-            <button class="button-submit">Sign Up</button>
+            <button class="button-submit">Sign up</button>
             <p class="p">Already have an account? <a class="span" href="/account/login">Sign In</a>
                 </div>
         </form>
@@ -62,22 +62,28 @@
 </script>
 
 <style>
+    .title{
+        font-size: 45px;
+    }
+
     .form {
-        height: 450px;
-        width: 400px;
+        height: 550px;
+        width: 500px;
     }
 
     .inputs input{
-        width: 280px;
+        width: 290px;
         height: 32px;
         text-align: left;
         font-weight: 500;
         margin-top: -10px;
+        padding-left: 15px;
     }
 
     .message{
         margin-top: 10px;
         align-self: left;
+        font-size: 16px;
     }
 
     .button-submit{
