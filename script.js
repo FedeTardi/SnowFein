@@ -123,11 +123,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    res.render('pages/' + req.deviceType + '/home');
+    if (req.deviceType == 'desktop' || req.deviceType == 'tablet') {
+        res.render('pages/desktop/home');
+    } else if (req.deviceType == 'phone') {
+        res.render('pages/mobile/home');
+    }
 });
 
 app.get('/register', (req, res) => {
-    res.render('pages/' + req.deviceType + '/register');
+    if (req.deviceType == 'desktop' || req.deviceType == 'tablet') {
+        res.render('pages/desktop/register');
+    } else if (req.deviceType == 'phone') {
+        res.render('pages/mobile/register');
+    }
 });
 
 app.post('/register', async (req, res) => {
