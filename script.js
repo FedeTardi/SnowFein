@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http')
 const session = require('express-session');
 const passport = require('passport');
+const device = require('express-device');
 
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
@@ -17,7 +18,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const httpServer = http.createServer(app);
-const httpPort = 80;
+const httpPort = 8008;
 
 const accountRoutes = require('./views/account.js');
 app.use('/account', accountRoutes);
@@ -110,16 +111,23 @@ passport.deserializeUser((email, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/home', (req, res) => {
-    res.render('pages/home')
+app.use(device.capture());
+
+app.use((req, res, next) => {
+    req.deviceType = req.device.type;
+    next();
 });
 
 app.get('/', (req, res) => {
     res.redirect('/home');
 });
 
+app.get('/home', (req, res) => {
+    res.render('pages/' + req.deviceType + '/home');
+});
+
 app.get('/register', (req, res) => {
-    res.render(`pages/register`);
+    res.render('pages/' + req.deviceType + '/register');
 });
 
 app.post('/register', async (req, res) => {
@@ -203,12 +211,12 @@ app.post('/register', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('pages/login');
+    res.render('pages/' + req.deviceType + '/login');
 });
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/account/dashboard',
-    failureRedirect: '/account/login'
+    failureRedirect: '/login'
 }), function (req, res) {
     req.session.isAuthenticated = true;
 });
@@ -260,9 +268,15 @@ app.post('/verify', (req, res) => {
     }
 });
 
-app.get('*', (req, res) => {
-    res.render('pages/pageNotFound');
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render('pages/error');
 });
+
+app.use((req, res) => {
+    res.status(404).render('pages/pageNotFound');
+});
+
 
 httpServer.listen(httpPort, () => {
     console.log(`Server listening on http port ${httpPort}`);
