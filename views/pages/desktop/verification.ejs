@@ -9,25 +9,25 @@
 </head>
 
 <body onload="checkAllInputs(), focusOnInput1()">
-    <form class="form" method="post" action="/account/verify">
+    <form method="post" action="/verification">
         <div class="title">Verification Code</div>
-        <p class="message">We have sent a verification code to <%= emailToVerify %>
+        <p class="message">We have sent a verification code to<br><%= emailToVerify %>
         </p>
         <div class="inputs">
-            <input id="input1" type="text" maxlength="1" oninput="handleInput(this, 'input2') "
+            <input id="input1" name="input1" type="text" maxlength="1" oninput="handleInput(this, 'input2') "
                 onkeydown="moveToPrevInput(event, this, 'input1')" onkeypress="validateInput(event)">
-            <input id="input2" type="text" maxlength="1" oninput="handleInput(this, 'input3')"
+            <input id="input2" name="input2" type="text" maxlength="1" oninput="handleInput(this, 'input3')"
                 onkeydown="moveToPrevInput(event, this, 'input1')" onkeypress="validateInput(event)">
-            <input id="input3" type="text" maxlength="1" oninput="handleInput(this, 'input4')"
+            <input id="input3" name="input3" type="text" maxlength="1" oninput="handleInput(this, 'input4')"
                 onkeydown="moveToPrevInput(event, this, 'input2')" onkeypress="validateInput(event)">
-            <input id="input4" type="text" maxlength="1" oninput="handleInput(this, 'input5')"
+            <input id="input4" name="input4" type="text" maxlength="1" oninput="handleInput(this, 'input5')"
                 onkeydown="moveToPrevInput(event, this, 'input3')" onkeypress="validateInput(event)">
-            <input id="input5" type="text" maxlength="1" oninput="handleInput(this, 'input6')"
+            <input id="input5" name="input5" type="text" maxlength="1" oninput="handleInput(this, 'input6')"
                 onkeydown="moveToPrevInput(event, this, 'input4')" onkeypress="validateInput(event)">
-            <input id="input6" type="text" maxlength="1" oninput="handleInput(this, 'input6')"
+            <input id="input6" name="input6" type="text" maxlength="1" oninput="handleInput(this, 'input6')"
                 onkeydown="moveToPrevInput(event, this, 'input5')" onkeypress="validateInput(event)">
         </div>
-        <button class="button-submit" id="verifyButton">Verify</button>
+        <button type="submit" class="button-submit" id="verifyButton">Verify</button>
     </form>
 </body>
 
@@ -36,11 +36,9 @@
         const maxLength = parseInt(currentInput.getAttribute('maxlength'));
         let inputValue = currentInput.value;
 
-        if (inputValue.length > maxLength) {
-            inputValue = inputValue.slice(0, maxLength);  // Tronca il valore a 1 carattere
-        }
-
         currentInput.value = inputValue.toUpperCase();
+
+        
 
         if (inputValue.length === maxLength) {
             const nextInput = document.getElementById(nextInputId);
@@ -80,7 +78,7 @@
             verifyButton.classList.add('disabled');
             verifyButton.disabled = true;
         } else {
-            verifyButton.disabled = true;
+            verifyButton.disabled = false;
             verifyButton.classList.remove('disabled');
             verifyButton
         }

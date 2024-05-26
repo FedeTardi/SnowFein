@@ -11,55 +11,58 @@
 </head>
 
 <body>
-    <div class="form-body">
-        <div class="row">
-            <div class="form-holder">
-                <div class="form-content">
-                    <div class="form-items">
-                        <h3>Become a member</h3>
-                        <p>Join our family and register today</p>
-                        <form class="requires-validation" novalidate>
+    <form action="/register" method="post">
+        <div class="form-body">
+            <div class="row">
+                <div class="form-holder">
+                    <div class="form-content">
+                        <div class="form-items">
+                            <h3>Become a member</h3>
+                            <p>Join our family and register today</p>
+                            <form class="requires-validation" novalidate>
 
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" name="name" placeholder="Name" required>
-                                <div class="valid-feedback">Name field is valid!</div>
-                                <div class="invalid-feedback">Name field cannot be blank!</div>
-                            </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="name" placeholder="Name" required>
+                                    <div class="valid-feedback">Name field is valid!</div>
+                                    <div class="invalid-feedback">Name field cannot be blank!</div>
+                                </div>
 
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" name="surname" placeholder="Surname" required>
-                                <div class="valid-feedback">Surname field is valid!</div>
-                                <div class="invalid-feedback">Surrname field cannot be blank!</div>
-                            </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="surname" placeholder="Surname"
+                                        required>
+                                    <div class="valid-feedback">Surname field is valid!</div>
+                                    <div class="invalid-feedback">Surrname field cannot be blank!</div>
+                                </div>
 
-                            <div class="col-md-12">
-                                <input class="form-control" type="email" name="email" placeholder="E-mail" required>
-                                <div class="valid-feedback">Email is valid!</div>
-                                <div class="invalid-feedback">Email field cannot be blank!</div>
-                            </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="email" name="email" placeholder="E-mail" required>
+                                    <div class="valid-feedback">Email is valid!</div>
+                                    <div class="invalid-feedback">Email field cannot be blank!</div>
+                                </div>
 
 
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" name="password" placeholder="Password"
-                                    required>
-                                <div class="valid-feedback">Password field is valid!</div>
-                                <div class="invalid-feedback">Password field cannot be blank!</div>
-                            </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="password" name="password" placeholder="Password"
+                                        required>
+                                    <div class="valid-feedback">Password field is valid!</div>
+                                    <div class="invalid-feedback">Password field cannot be blank!</div>
+                                </div>
 
-                            <p></p>
-                            <div class="col-12 text-center">
-                                <p>Already have an account? <a href="/login">Sign in</a></p>
-                            </div>
+                                <p></p>
+                                <div class="col-12 text-center">
+                                    <p>Already have an account? <a href="/login">Sign in</a></p>
+                                </div>
 
-                            <div class="form-button mt-3">
-                                <button id="submit" type="submit" class="btn btn-primary">Register</button>
-                            </div>
-                        </form>
+                                <div class="form-button mt-3">
+                                    <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
 </body>
 

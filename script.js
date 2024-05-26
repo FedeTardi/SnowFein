@@ -23,8 +23,6 @@ const httpPort = 8008;
 const accountRoutes = require('./views/account.js');
 app.use('/account', accountRoutes);
 
-
-
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
 app.use(express.static('public'));
@@ -43,7 +41,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'database sito nuovo'
+    database: 'snowfein'
 });
 
 passport.use(
@@ -113,6 +111,8 @@ app.use(passport.session());
 
 app.use(device.capture());
 
+
+
 app.use((req, res, next) => {
     req.deviceType = req.device.type;
     next();
@@ -131,10 +131,12 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-    if (req.deviceType == 'desktop' || req.deviceType == 'tablet') {
-        res.render('pages/desktop/register');
-    } else if (req.deviceType == 'phone') {
-        res.render('pages/mobile/register');
+    if (!req.session.isAuthenticated) {
+        if (req.deviceType == 'desktop' || req.deviceType == 'tablet') {
+            res.render('pages/desktop/register');
+        } else if (req.deviceType == 'phone') {
+            res.render('pages/mobile/register');
+        }
     }
 });
 
@@ -145,7 +147,6 @@ app.post('/register', async (req, res) => {
     name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     surname = surname.charAt(0).toUpperCase() + surname.slice(1).toLowerCase();
     email = email.toLowerCase();
-    req.session.email = email;
 
     let code = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -154,9 +155,9 @@ app.post('/register', async (req, res) => {
     }
 
     const info = await transporter.sendMail({
-        from: '"RaptHill 🦖" <RaptHill@gmail.com>',
+        from: '"SnowFein " <RaptHill@gmail.com>',
         to: email,
-        subject: "Validazione account RaptHill ",
+        subject: "Validazione account SnowFein ",
         text: "",
         html: `
         <html>
@@ -181,10 +182,10 @@ app.post('/register', async (req, res) => {
         <body>
             <div class="container" style="color: black">
                 <p>Gentile ${name},</p>
-                <p>Grazie per esserti registrato su RaptHill!</p>
+                <p>Grazie per esserti registrato su SnowFein!</p>
                 <p>Il codice di verifica per attivare il tuo account è: <strong>${code}</strong></p>
                 <p>Se non hai effettuato questa richiesta di registrazione, ti preghiamo di ignorare questa email.</p>
-                <p>Cordiali saluti,<br>Il Team RaptHill</p>
+                <p>Cordiali saluti,<br>Il Team SnowFein</p>
             </div>
         </body>
         </html>
@@ -207,10 +208,16 @@ app.post('/register', async (req, res) => {
 
         connection.query('INSERT INTO accountstoverificate SET ?', dataToInsert, (err, results) => {
             if (err) {
-                console.error('Errore durante l\'inserimento dei dati:', err);
+                if (err === 'ER_DUP_ENTRY') {
+                    alert("Email già registrata");
+                    res.render('/login')
+                } else {
+                    console.error('Errore durante l\'inserimento dei dati:', err);
+                }
             } else {
+                req.session.emailToVerify = email;
                 req.session.needToVerify = true;
-                res.redirect('/verify');
+                res.redirect('/verification');
             }
         });
 
@@ -219,7 +226,11 @@ app.post('/register', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('pages/' + req.deviceType + '/login');
+    if (!req.session.isAuthenticated) {
+        res.render('pages/' + req.deviceType + '/login');
+    } else {
+        res.redirect('/account/dashboard');
+    }
 });
 
 app.post('/login', passport.authenticate('local', {
@@ -229,51 +240,83 @@ app.post('/login', passport.authenticate('local', {
     req.session.isAuthenticated = true;
 });
 
-app.get('/verify', (req, res) => {
-    if (req.session.needToVerify) {
-        res.render('account/verification', { emailToVerify: req.session.email })
+app.get('/verification', (req, res) => {
+    if (req.session.needToVerify && req.session.email) {
+        const emailToVerify = req.session.emailToVerify;
+        res.render('pages/desktop/verification', { emailToVerify });
     } else {
-        res.redirect('/account/login')
+        res.redirect('/login')
     }
 });
 
-app.post('/verify', (req, res) => {
-    let verificationCode;
-    pool.getConnection((err, connection) => {
-        if (err) {
-            return done(err);
-        }
-
-        connection.query('SELECT verificationCode FROM accountstoverificate WHERE email = ?', [req.session.email], (err, results) => {
-            connection.release();
-            if (err) {
-                return done(err);
-            }
-            if (results.length === 0) {
-                return done(null, false, { message: 'Utente non trovato' });
-            }
-            const user = results[0];
-            verificationCode = user.verificationCode;
-            return done(null, user);
-        });
-        connection.release();
-    });
+app.post('/verification', (req, res) => {
+    const verificationCode = [];
 
     for (let i = 1; i <= 6; i++) {
         const inputName = 'input' + i;
         const inputValue = req.body[inputName];
 
-        if (typeof inputValue === 'string') {
+        if (typeof inputValue === 'string' && inputValue.length === 1) {
             verificationCode.push(inputValue);
         } else {
-            return res.status(400).send('Valori di input mancanti o non validi.');
+            return res.status(400).send('Errore: Tutti i campi del codice di verifica devono essere riempiti.');
         }
     }
+
     const userCode = verificationCode.join('');
 
-    if (userCode == verificationCode) {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log('Errore nella connessione al database:', err);
+            return res.status(500).send('Errore nella connessione al database');
+        }
 
-    }
+        connection.query('SELECT * FROM accountstoverificate WHERE email = ?', [req.session.emailToVerify], (err, results) => {
+            if (err) {
+                connection.release();
+                console.error('Errore durante la query:', err);
+                return res.status(500).send('Errore durante la query');
+            }
+
+            if (results.length === 0) {
+                connection.release();
+                return res.status(400).send('Utente non trovato o codice di verifica errato');
+            }
+
+            const user = results[0];
+            const expectedCode = user.verificationCode;
+
+            if (userCode !== expectedCode) {
+                connection.release();
+                redirect('/verification');
+            }
+
+            const dataToInsert = {
+                name: user.name,
+                surname: user.surname,
+                email: user.email,
+                password: user.password
+            };
+
+            connection.query('INSERT INTO accounts SET ?', dataToInsert, (err, results) => {
+                if (err) {
+                    connection.release();
+                    console.error('Errore durante l\'inserimento dei dati:', err);
+                    return res.status(500).send('Errore durante l\'inserimento dei dati');
+                }
+
+                connection.query('DELETE FROM accountstoverificate WHERE email = ?', [user.email], (err, results) => {
+                    connection.release();
+                    if (err) {
+                        console.error('Errore durante l\'eliminazione dei dati:', err);
+                        return res.status(500).send('Errore durante l\'eliminazione dei dati');
+                    }
+
+                    res.send('Verifica completata con successo e dati trasferiti');
+                });
+            });
+        });
+    });
 });
 
 app.use((err, req, res, next) => {
