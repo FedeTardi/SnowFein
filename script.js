@@ -122,6 +122,18 @@ app.get('/', (req, res) => {
     res.redirect('/home');
 });
 
+app.get('/privacy-policy', (req, res) => {
+    res.render('pages/desktop/privacy-policy');
+});
+
+app.get('/about-us', (req, res) => {
+    res.render('pages/desktop/privacy-policy');
+});
+
+app.get('/terms', (req, res) => {
+    res.render('pages/desktop/terms');
+});
+
 app.get('/home', (req, res) => {
     if (req.deviceType == 'desktop' || req.deviceType == 'tablet') {
         res.render('pages/desktop/home');

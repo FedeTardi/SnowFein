@@ -7,6 +7,12 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
 .centered {
     display: flex;
     align-items: center;
